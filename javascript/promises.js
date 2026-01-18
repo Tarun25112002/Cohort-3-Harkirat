@@ -1,45 +1,24 @@
-import fs from 'fs'
-// //  Write code that
-// // logs hi after 1 second
-// // logs hello 3 seconds after step 1
-// // logs hello there 5 seconds after step 2
-// // function helloThere() {
-// //   console.log("hello there!");
-// // }
-// // function hello() {
-// //   console.log("hello!");
-// //   return setTimeout(helloThere, 5000);
-// // }
-// // function hi() {
-// //   console.log("hi!");
-// //   return setTimeout(hello, 3000);
-// // }
-// // setTimeout(hi, 1000);
-// function delay(ms) {
-//   return new Promise((resolve) => {
-//     setTimeout(resolve, ms);
-//   });
-// }
-// function hi() {
-//   console.log("hi!");
-// }
-// function hello() {
-//   console.log("hello!");
-// }
-// function hiiThere() {
-//   console.log("hii there!");
-// }
-// delay(1000).then(hi);
-// delay(3000).then(hello);
-// delay(5000).then(hiiThere);
-function readFile(filename){
-return new Promise(resolve=>{
-  const read = fs.readFileSync(new URL(filename, "utf-8"))
-   resolve(read)
-})
+const fs = require("fs");
+const path = require("path");
+
+function readFile(fileName) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(fileName, "utf-8", (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
 }
-function callback(contents){
-  console.log(contents);
-  
+
+function print(content) {
+  console.log(content);
 }
-readFile("./a.txt").then(callback)
+
+readFile(path.join(__dirname, "a.txt"))
+  .then(print)
+  .catch((err) => {
+    console.error("Failed to read file:", err);
+  });
